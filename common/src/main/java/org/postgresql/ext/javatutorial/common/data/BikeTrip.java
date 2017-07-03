@@ -66,7 +66,7 @@ public class BikeTrip {
                 Integer.parseInt(bikeId),
                 userType,
                 Optional.ofNullable(
-                null == birthYear || birthYear.isEmpty() ? null : new Short((short) Integer.parseInt(birthYear))),
+                null == birthYear || birthYear.isEmpty() ? null : (short) Integer.parseInt(birthYear)),
                 (short) Integer.parseInt(gender),
                 startStation,
                 endStation
@@ -77,8 +77,16 @@ public class BikeTrip {
         return startDate;
     }
 
+    public String getStartDateString() {
+        return startDate.format(TIMESTAMP_FORMATTER);
+    }
+
     public LocalDateTime getEndDate() {
         return endDate;
+    }
+
+    public String getEndDateString() {
+        return endDate.format(TIMESTAMP_FORMATTER);
     }
 
     public int getBikeId() {
@@ -108,8 +116,8 @@ public class BikeTrip {
     @Override
     public String toString() {
         return "BikeTrip{" +
-                "startDate=" + startDate +
-                ", endDate=" + endDate +
+                "startDate=" + getStartDateString() +
+                ", endDate=" + getEndDateString() +
                 ", bikeId=" + bikeId +
                 ", userType='" + userType + '\'' +
                 ", birthYear=" + birthYear +

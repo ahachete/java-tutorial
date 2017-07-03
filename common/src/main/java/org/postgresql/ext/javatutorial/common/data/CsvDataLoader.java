@@ -35,12 +35,8 @@ import java.util.zip.GZIPInputStream;
 
 
 public class CsvDataLoader {
-    private static final String CSV_FILE_DATA = "201701-citibike-tripdata.csv.gz";
-
-
-    public static Collection<BikeTrip> loadCsvData() throws IOException {
-        return loadCsvData(CSV_FILE_DATA);
-    }
+    public static final String PRODUCTION_CSV_FILE_DATA = "201701-citibike-tripdata.csv.gz";
+    public static final String TESTING_CSV_FILE_DATA = "201701-citibike-tripdata.1k.csv.gz";
 
     public static Collection<BikeTrip> loadCsvData(String resourceFileName) throws IOException {
         URL resourceUrl = CsvDataLoader.class.getClassLoader().getResource(resourceFileName);
