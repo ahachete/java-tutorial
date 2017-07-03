@@ -14,6 +14,7 @@
     <modules>
         <module>common</module>
         <module>solutions</module>
+        <module>exercises</module>
     </modules>
 
     <name>PostgreSQL and Java tutorial</name>
