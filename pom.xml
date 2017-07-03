@@ -6,9 +6,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.postgresql.ext</groupId>
-    <artifactId>java-tutorial</artifactId>
+    <groupId>org.postgresql.ext.java-tutorial</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>common</module>
+    </modules>
 
     <name>PostgreSQL and Java tutorial</name>
     <description>Tutorial on high-performance PostgreSQL with Java</description>
