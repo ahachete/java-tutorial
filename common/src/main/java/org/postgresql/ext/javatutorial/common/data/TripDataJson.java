@@ -24,10 +24,12 @@ package org.postgresql.ext.javatutorial.common.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
+
 
 public class TripDataJson {
-    @SerializedName("start_time") private String startTime;
-    @SerializedName("stop_time") private String stopTime;
+    @SerializedName("start_time") private LocalDateTime startTime;
+    @SerializedName("stop_time") private LocalDateTime stopTime;
     @SerializedName("start_station_id") private int startStationId;
     @SerializedName("start_station_name") private String startStationName;
     @SerializedName("start_station_latitude") private double startStationLatitude;
@@ -41,11 +43,11 @@ public class TripDataJson {
     @SerializedName("birth_year") private short birthYear;
     private short gender;
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public String getStopTime() {
+    public LocalDateTime getStopTime() {
         return stopTime;
     }
 

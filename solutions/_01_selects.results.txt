@@ -1,0 +1,5 @@
+Avg(ms):	org.postgresql.ext.javatutorial.solutions._01_selects._01.BasicTypesSelect.basicTypesSelect		2369.17 ± 911.36
+Avg(ms):	org.postgresql.ext.javatutorial.solutions._01_selects._02.JsonSelect.jsonSelect		2646.95 ± 332.71
+Avg(ms):	org.postgresql.ext.javatutorial.solutions._01_selects._02.JsonSelect.jsonSelectParse		4320.11 ± 826.99
+Avg(ms):	org.postgresql.ext.javatutorial.solutions._01_selects._03.ArraysSelect.selectLargeArrays		777.24 ± 479.11
+Avg(ms):	org.postgresql.ext.javatutorial.solutions._01_selects._03.ArraysSelect.selectLargeCsv		322.53 ± 121.48

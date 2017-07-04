@@ -49,7 +49,8 @@ public class ArraysSelect {
              *
              * Execute the query SELECT_ARRAYS_QUERY.
              * Get the returned row and get the (SQL) Array from each column.
-             * Consume within the blackhole each Array.
+             * Consume the array (i.e., unwrap it first, as it would be like user would use it)
+             * within the blackhole each Array.
              */
         });
     }

@@ -54,7 +54,8 @@ public class JsonSelect {
              * Transform in the query all the fields to a json document.
              * For every row, parse the returned json using Google's Gson library.
              * Consume the parsed object in a blackhole.
-             * You may want to use the TripDataJson class
+             * You may want to use the TripDataJson class, and then GsonUtil to obtain a proper Gson instance.
+             *
              */
         });
     }

@@ -19,42 +19,42 @@
  */
 
 
-package org.postgresql.ext.javatutorial.solutions._01_selects._02;
+package org.postgresql.ext.javatutorial.common.util;
 
 
 import com.google.gson.Gson;
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.infra.Blackhole;
-import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
-import org.postgresql.ext.javatutorial.common.data.TripDataJson;
-import org.postgresql.ext.javatutorial.common.util.GsonUtil;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.infra.BenchmarkParams;
+import org.openjdk.jmh.results.RunResult;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.VerboseMode;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
-public class JsonSelect {
-    private static final String ROW_TO_JSON_QUERY = "SELECT row_to_json(trips.*) FROM trips";
-
-    @Benchmark
-    public void jsonSelect(Blackhole blackhole) throws IOException, SQLException {
-        SqlUtil.connection(c -> {
-            ResultSet resultSet = c.prepareStatement(ROW_TO_JSON_QUERY).executeQuery();
-            while(resultSet.next()) {
-                blackhole.consume(resultSet.getString(1));
-            }
-        });
+public class GsonUtil {
+    private static class Holder {
+        private static final Gson INSTANCE = new GsonBuilder()
+                .registerTypeAdapter(
+                        LocalDateTime.class,
+                        (JsonDeserializer<LocalDateTime>) (json,type,context) ->
+                                LocalDateTime.parse(
+                                        json.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                                )
+                ).create();
     }
 
-    @Benchmark
-    public void jsonSelectParse(Blackhole blackhole) throws IOException, SQLException {
-        SqlUtil.connection(c -> {
-            ResultSet resultSet = c.prepareStatement(ROW_TO_JSON_QUERY).executeQuery();
-            Gson gson = GsonUtil.gsonWithLocalDateTimeSupport();
-            while(resultSet.next()) {
-                blackhole.consume(gson.fromJson(resultSet.getString(1), TripDataJson.class));
-            }
-        });
+    public static Gson gsonWithLocalDateTimeSupport() {
+        return Holder.INSTANCE;
     }
 }

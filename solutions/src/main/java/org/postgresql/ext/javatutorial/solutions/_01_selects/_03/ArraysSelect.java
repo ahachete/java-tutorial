@@ -47,10 +47,10 @@ public class ArraysSelect {
         SqlUtil.connection(c -> {
             ResultSet resultSet = c.prepareStatement(SELECT_ARRAYS_QUERY).executeQuery();
             if(resultSet.next()) {
-                blackhole.consume(resultSet.getArray(1).getArray());
-                blackhole.consume(resultSet.getArray(2).getArray());
-                blackhole.consume(resultSet.getArray(3).getArray());
-                blackhole.consume(resultSet.getArray(4).getArray());
+                blackhole.consume((Integer[]) resultSet.getArray(1).getArray());
+                blackhole.consume((Double[]) resultSet.getArray(2).getArray());
+                blackhole.consume((String[]) resultSet.getArray(3).getArray());
+                blackhole.consume((String[]) resultSet.getArray(4).getArray());
             }
         });
     }
