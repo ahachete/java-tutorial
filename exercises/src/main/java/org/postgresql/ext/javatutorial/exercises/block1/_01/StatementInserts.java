@@ -27,6 +27,7 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
+import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
 
 import java.io.IOException;
 import java.sql.SQLException;

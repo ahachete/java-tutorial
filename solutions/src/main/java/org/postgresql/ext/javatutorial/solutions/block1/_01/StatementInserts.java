@@ -25,8 +25,8 @@ package org.postgresql.ext.javatutorial.solutions.block1._01;
 import org.openjdk.jmh.annotations.*;
 import org.postgresql.ext.javatutorial.common.data.BikeStation;
 import org.postgresql.ext.javatutorial.common.data.BikeTrip;
+import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
-import org.postgresql.ext.javatutorial.solutions.block1.TripsBenchmarkState;
 
 import java.io.IOException;
 import java.sql.Connection;

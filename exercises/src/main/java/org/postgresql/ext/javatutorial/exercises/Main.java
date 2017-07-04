@@ -22,27 +22,17 @@
 package org.postgresql.ext.javatutorial.exercises;
 
 
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.infra.BenchmarkParams;
-import org.openjdk.jmh.results.RunResult;
-import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-import org.openjdk.jmh.runner.options.VerboseMode;
+import org.postgresql.ext.javatutorial.common.util.MainUtil;
 import org.postgresql.ext.javatutorial.exercises.block1._01.StatementInserts;
-
-import java.util.Collection;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import org.postgresql.ext.javatutorial.exercises.block1._02.PreparedInserts;
 
 
 public class Main {
-    private static final int ITERATIONS = 3;
-    private static final int FORKS = 2;
-
     public enum Benchmarks {
-        StatementInserts(StatementInserts.class);
+        StatementInserts(StatementInserts.class),
+        PreparedInserts(PreparedInserts.class)
+        ;
 
         private final Class<?> clazz;
 
@@ -52,40 +42,6 @@ public class Main {
     }
 
     public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(
-                        Benchmarks.valueOf(args[0]).clazz.getSimpleName()
-                )
-                .forks(FORKS)
-                .measurementIterations(ITERATIONS)
-                .timeUnit(TimeUnit.MILLISECONDS)
-                .mode(Mode.SingleShotTime)
-                .verbosity(VerboseMode.SILENT)
-                .build();
-
-        Collection<RunResult> runResults = new Runner(opt).run();
-
-        runResults.stream().forEach(runResult ->
-                System.out.printf(
-                        "Avg(ms):\t%s\t%s\t%.2f ± %.2f\n",
-                        runResult.getParams().getBenchmark(),
-                        testParams(runResult),
-                        runResult.getPrimaryResult().getScore(),
-                        runResult.getPrimaryResult().getScoreError()
-                )
-        );
-    }
-
-    private static String testParams(RunResult runResult) {
-        BenchmarkParams params = runResult.getParams();
-        if(null == params) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        return params.getParamsKeys().stream()
-                .map(p ->
-                    sb.append(p).append("=").append(params.getParam(p))
-                ).collect(Collectors.joining(", "));
+        MainUtil.run(Benchmarks.valueOf(args[0]).clazz);
     }
 }

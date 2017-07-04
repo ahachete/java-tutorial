@@ -19,7 +19,7 @@
  */
 
 
-package org.postgresql.ext.javatutorial.exercises.block1._01;
+package org.postgresql.ext.javatutorial.common.jmh;
 
 
 import org.openjdk.jmh.annotations.Level;

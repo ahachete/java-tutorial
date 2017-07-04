@@ -18,41 +18,26 @@
  *
  */
 
+package org.postgresql.ext.javatutorial.exercises.block1._02;
 
-package org.postgresql.ext.javatutorial.solutions.block1;
 
-
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.data.BikeTrip;
-import org.postgresql.ext.javatutorial.common.data.CsvDataLoader;
-import org.postgresql.ext.javatutorial.common.data.TripsDdl;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
+import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collection;
 
 
-@State(Scope.Benchmark)
-public class TripsBenchmarkState {
-    private final Collection<BikeTrip> bikeTrips;
-
-    public TripsBenchmarkState() {
-        try {
-            this.bikeTrips = CsvDataLoader.loadCsvData(CsvDataLoader.TESTING_CSV_FILE_DATA);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Collection<BikeTrip> getBikeTrips() {
-        return bikeTrips;
-    }
-
-    @Setup(Level.Invocation)
-    public void emptyTable() throws IOException, SQLException {
-        TripsDdl.reCreateTripsTable();
+public class PreparedInserts {
+    @Benchmark
+    public void preparedInserts(TripsBenchmarkState state) throws IOException, SQLException {
+        SqlUtil.connection(c -> {
+            /*
+             * TODO:
+             *
+             * Similar to exercise 01, but use a single-insert PreparedStatement
+             */
+        });
     }
 }
