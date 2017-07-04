@@ -18,10 +18,14 @@
  *
  */
 
-package org.postgresql.ext.javatutorial.solutions.block1._02;
+package org.postgresql.ext.javatutorial.solutions.block1._03;
 
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
+import org.postgresql.ext.javatutorial.common.data.BikeTrip;
 import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 import org.postgresql.ext.javatutorial.solutions.PreparedStatementUtil;
@@ -31,20 +35,31 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class PreparedInserts {
+public class BatchedInserts {
+    @State(Scope.Benchmark)
+    public static class BatchInsertState {
+        @Param({"3", "10", "100"})
+        public int batchSize;
+    }
+
     @Benchmark
-    public void preparedInserts(TripsBenchmarkState state) throws IOException, SQLException {
+    public void batchedInserts(TripsBenchmarkState state, BatchInsertState batchState) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             PreparedStatement preparedStatement = c.prepareStatement(PreparedStatementUtil.INSERT);
-            state.getBikeTrips().stream()
-                    .forEach(t -> {
-                        try {
-                            PreparedStatementUtil.setDataPreparedStatement(preparedStatement, t);
-                            preparedStatement.execute();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+
+            int i = 0;
+            for (BikeTrip trip : state.getBikeTrips()) {
+                try {
+                    PreparedStatementUtil.setDataPreparedStatement(preparedStatement, trip);
+                    preparedStatement.addBatch();
+                    if (i++ == batchState.batchSize) {
+                        i = 0;
+                        preparedStatement.executeBatch();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
     }
 }
