@@ -24,13 +24,13 @@ package org.postgresql.ext.javatutorial.exercises;
 
 import org.openjdk.jmh.runner.RunnerException;
 import org.postgresql.ext.javatutorial.common.util.MainUtil;
-import org.postgresql.ext.javatutorial.exercises.block1._01.StatementInserts;
-import org.postgresql.ext.javatutorial.exercises.block1._02.PreparedInserts;
-import org.postgresql.ext.javatutorial.exercises.block1._03.BatchedInserts;
-import org.postgresql.ext.javatutorial.exercises.block1._04.Copy;
-import org.postgresql.ext.javatutorial.exercises.block2._01.BasicTypesSelect;
-import org.postgresql.ext.javatutorial.exercises.block2._02.JsonSelect;
-import org.postgresql.ext.javatutorial.exercises.block2._03.ArraysSelect;
+import org.postgresql.ext.javatutorial.exercises._02_inserts._01.StatementInserts;
+import org.postgresql.ext.javatutorial.exercises._02_inserts._02.PreparedInserts;
+import org.postgresql.ext.javatutorial.exercises._02_inserts._03.BatchedInserts;
+import org.postgresql.ext.javatutorial.exercises._02_inserts._04.Copy;
+import org.postgresql.ext.javatutorial.exercises._01_selects._01.BasicTypesSelect;
+import org.postgresql.ext.javatutorial.exercises._01_selects._02.JsonSelect;
+import org.postgresql.ext.javatutorial.exercises._01_selects._03.ArraysSelect;
 
 
 public class Main {
