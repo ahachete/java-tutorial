@@ -37,6 +37,19 @@ import java.util.stream.Collectors;
 
 public class SqlUtil {
     private static final String PROPERTIES_FILE = "dbconnection.properties";
+    private static final Properties PROPERTIES = new Properties();
+    static {
+        URL propertiesUrl = SqlUtil.class.getClassLoader().getResource(PROPERTIES_FILE);
+        if(null == propertiesUrl) {
+            throw new RuntimeException("You require a properties file for the connection");
+        }
+
+        try(InputStream is = propertiesUrl.openStream()) {
+            PROPERTIES.load(is);
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FunctionalInterface
     public interface SqlExceptionConsumer<T> {
@@ -44,18 +57,8 @@ public class SqlUtil {
     }
 
     public static void connection(SqlExceptionConsumer<Connection> consumer) throws IOException, SQLException {
-        URL propertiesUrl = SqlUtil.class.getClassLoader().getResource(PROPERTIES_FILE);
-        if(null == propertiesUrl) {
-            throw new RuntimeException("You require a properties file for the connection");
-        }
-
-        Properties properties = new Properties();
-        try(InputStream is = propertiesUrl.openStream()) {
-            properties.load(is);
-        }
-
         try(
-                Connection connection = DriverManager.getConnection("jdbc:postgresql:", properties)
+                Connection connection = DriverManager.getConnection("jdbc:postgresql:", PROPERTIES)
         ) {
             consumer.accept(connection);
         }
