@@ -30,6 +30,7 @@ import org.postgresql.ext.javatutorial.solutions.block1._03.BatchedInserts;
 import org.postgresql.ext.javatutorial.solutions.block1._04.Copy;
 import org.postgresql.ext.javatutorial.solutions.block2._01.BasicTypesSelect;
 import org.postgresql.ext.javatutorial.solutions.block2._02.JsonSelect;
+import org.postgresql.ext.javatutorial.solutions.block2._03.ArraysSelect;
 
 
 public class Main {
@@ -42,7 +43,8 @@ public class Main {
 
         /* Block 2 */
         BasicTypesSelect(BasicTypesSelect.class),
-        JsonSelect(JsonSelect.class)
+        JsonSelect(JsonSelect.class),
+        ArraysSelect(ArraysSelect.class)
 
         ;
 
