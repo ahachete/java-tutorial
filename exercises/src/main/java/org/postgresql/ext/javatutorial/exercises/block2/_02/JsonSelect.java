@@ -18,37 +18,43 @@
  *
  */
 
-package org.postgresql.ext.javatutorial.exercises.block1._04;
+
+package org.postgresql.ext.javatutorial.exercises.block2._02;
 
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
+import org.openjdk.jmh.infra.Blackhole;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class Copy {
-    @State(Scope.Benchmark)
-    public static class BatchInsertState {
-        @Param({"3", "10", "100"})
-        public int batchSize;
-    }
-
+public class JsonSelect {
     @Benchmark
-    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
+    public void jsonSelect(Blackhole blackhole) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             /**
              * TODO:
              *
-             * Get a CopyManager from the connection.
-             * Use copyIn(...) to copy data into PostgreSQL, from state variable.
-             * Avoid materializing into a String or other intermediary format the whole dataset. To do so,
-             * batch every batchState trips into a copyIn() call.
+             * Execute a query to return all the rows of the trips table.
+             * Transform in the query all the fields to a json document.
+             * For every row, get that single field of every row as a String and consume it in the blackhole.
+             */
+        });
+    }
+
+    @Benchmark
+    public void jsonSelectParse(Blackhole blackhole) throws IOException, SQLException {
+        SqlUtil.connection(c -> {
+            /**
+             * TODO:
+             *
+             * Execute a query to return all the rows of the trips table.
+             * Transform in the query all the fields to a json document.
+             * For every row, parse the returned json using Google's Gson library.
+             * Consume the parsed object in a blackhole.
+             * You may want to use the TripDataJson class
              */
         });
     }

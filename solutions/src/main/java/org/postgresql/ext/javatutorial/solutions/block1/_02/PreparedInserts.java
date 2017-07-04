@@ -22,7 +22,7 @@ package org.postgresql.ext.javatutorial.solutions.block1._02;
 
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
+import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 import org.postgresql.ext.javatutorial.solutions.PreparedStatementUtil;
 
@@ -33,7 +33,7 @@ import java.sql.SQLException;
 
 public class PreparedInserts {
     @Benchmark
-    public void preparedInserts(TripsBenchmarkState state) throws IOException, SQLException {
+    public void preparedInserts(InsertsState state) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             PreparedStatement preparedStatement = c.prepareStatement(PreparedStatementUtil.INSERT);
             state.getBikeTrips().stream()

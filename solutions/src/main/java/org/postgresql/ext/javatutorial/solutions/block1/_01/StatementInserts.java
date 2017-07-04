@@ -28,7 +28,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.postgresql.ext.javatutorial.common.data.BikeTrip;
 import org.postgresql.ext.javatutorial.common.data.Data2Csv;
-import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
+import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class StatementInserts {
     }
 
     @Benchmark
-    public void statementInserts(TripsBenchmarkState state) throws IOException, SQLException {
+    public void statementInserts(InsertsState state) throws IOException, SQLException {
         SqlUtil.connection(c ->
                 executeStatements(
                         c,
@@ -98,7 +98,7 @@ public class StatementInserts {
     }
 
     @Benchmark
-    public void statementMultiInserts(TripsBenchmarkState tripsState, MultiInsertState batchState)
+    public void statementMultiInserts(InsertsState tripsState, MultiInsertState batchState)
     throws IOException, SQLException {
         SqlUtil.connection(c ->
                 executeStatements(

@@ -18,38 +18,28 @@
  *
  */
 
-package org.postgresql.ext.javatutorial.exercises.block1._04;
+
+package org.postgresql.ext.javatutorial.solutions.block2._01;
 
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
+import org.openjdk.jmh.infra.Blackhole;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
+import org.postgresql.ext.javatutorial.common.jmh.TripDataBlackholeConsumer;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class Copy {
-    @State(Scope.Benchmark)
-    public static class BatchInsertState {
-        @Param({"3", "10", "100"})
-        public int batchSize;
-    }
-
+public class BasicTypesSelect {
     @Benchmark
-    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
+    public void basicTypesSelect(Blackhole blackhole) throws IOException, SQLException {
         SqlUtil.connection(c -> {
-            /**
-             * TODO:
-             *
-             * Get a CopyManager from the connection.
-             * Use copyIn(...) to copy data into PostgreSQL, from state variable.
-             * Avoid materializing into a String or other intermediary format the whole dataset. To do so,
-             * batch every batchState trips into a copyIn() call.
-             */
+            ResultSet resultSet = c.prepareStatement("SELECT * FROM trips").executeQuery();
+            while(resultSet.next()) {
+                TripDataBlackholeConsumer.consumeTripData(resultSet, blackhole);
+            }
         });
     }
 }

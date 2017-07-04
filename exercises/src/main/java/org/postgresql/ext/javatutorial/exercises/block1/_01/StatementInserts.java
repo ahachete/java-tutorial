@@ -26,8 +26,8 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
+import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
-import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,13 +35,13 @@ import java.sql.SQLException;
 
 public class StatementInserts {
     @Benchmark
-    public void statementInserts(TripsBenchmarkState state) throws IOException, SQLException {
+    public void statementInserts(InsertsState state) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             /*
              * TODO:
              *
              * Using Statement (not PreparedStatement!), generate the String representing an INSERT command
-             * from the data obtained from the TripsBenchmarkState, and execute the statements.
+             * from the data obtained from the InsertsState, and execute the statements.
              */
         });
     }
@@ -53,14 +53,14 @@ public class StatementInserts {
     }
 
     @Benchmark
-    public void statementMultiInserts(TripsBenchmarkState tripsState, MultiInsertState batchState)
+    public void statementMultiInserts(InsertsState tripsState, MultiInsertState batchState)
     throws IOException, SQLException {
         SqlUtil.connection(c -> {
             /*
              * TODO:
              *
              * Using Statement (not PreparedStatement!), generate the String representing a multi-valued INSERT command
-             * from the data obtained from the TripsBenchmarkState, and execute the statements.
+             * from the data obtained from the InsertsState, and execute the statements.
              * Use the bachState to define the batch size.
              */
         });

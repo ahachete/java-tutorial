@@ -29,7 +29,7 @@ import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 import org.postgresql.ext.javatutorial.common.data.BikeTrip;
 import org.postgresql.ext.javatutorial.common.data.Data2Csv;
-import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
+import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class Copy {
     }
 
     @Benchmark
-    public void batchedInserts(TripsBenchmarkState state, BatchInsertState batchState) throws IOException, SQLException {
+    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             CopyManager copyManager = new CopyManager((BaseConnection) c);
             Iterator<BikeTrip> iterator = state.getBikeTrips().iterator();

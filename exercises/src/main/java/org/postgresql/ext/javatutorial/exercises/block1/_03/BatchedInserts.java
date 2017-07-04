@@ -25,7 +25,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
+import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class BatchedInserts {
     }
 
     @Benchmark
-    public void batchedInserts(TripsBenchmarkState state, BatchInsertState batchState) throws IOException, SQLException {
+    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
         SqlUtil.connection(c -> {
             /**
              * TODO:

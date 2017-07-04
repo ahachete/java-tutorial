@@ -28,14 +28,22 @@ import org.postgresql.ext.javatutorial.exercises.block1._01.StatementInserts;
 import org.postgresql.ext.javatutorial.exercises.block1._02.PreparedInserts;
 import org.postgresql.ext.javatutorial.exercises.block1._03.BatchedInserts;
 import org.postgresql.ext.javatutorial.exercises.block1._04.Copy;
+import org.postgresql.ext.javatutorial.exercises.block2._01.BasicTypesSelect;
+import org.postgresql.ext.javatutorial.exercises.block2._02.JsonSelect;
 
 
 public class Main {
     public enum Benchmarks {
+        /* Block 1 */
         StatementInserts(StatementInserts.class),
         PreparedInserts(PreparedInserts.class),
         BatchedInserts(BatchedInserts.class),
-        Copy(Copy.class)
+        Copy(Copy.class),
+
+        /* Block 2 */
+        BasicTypesSelect(BasicTypesSelect.class),
+        JsonSelect(JsonSelect.class)
+
         ;
 
         private final Class<?> clazz;

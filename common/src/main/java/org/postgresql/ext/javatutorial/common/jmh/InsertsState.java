@@ -18,38 +18,41 @@
  *
  */
 
-package org.postgresql.ext.javatutorial.exercises.block1._04;
+
+package org.postgresql.ext.javatutorial.common.jmh;
 
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
-import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
+import org.postgresql.ext.javatutorial.common.data.BikeTrip;
+import org.postgresql.ext.javatutorial.common.data.CsvDataLoader;
+import org.postgresql.ext.javatutorial.common.data.TripsDdl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 
 
-public class Copy {
-    @State(Scope.Benchmark)
-    public static class BatchInsertState {
-        @Param({"3", "10", "100"})
-        public int batchSize;
+@State(Scope.Benchmark)
+public class InsertsState {
+    private final Collection<BikeTrip> bikeTrips;
+
+    public InsertsState() {
+        try {
+            this.bikeTrips = CsvDataLoader.loadCsvData(CsvDataLoader.TESTING_CSV_FILE_DATA);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Benchmark
-    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
-        SqlUtil.connection(c -> {
-            /**
-             * TODO:
-             *
-             * Get a CopyManager from the connection.
-             * Use copyIn(...) to copy data into PostgreSQL, from state variable.
-             * Avoid materializing into a String or other intermediary format the whole dataset. To do so,
-             * batch every batchState trips into a copyIn() call.
-             */
-        });
+    public Collection<BikeTrip> getBikeTrips() {
+        return bikeTrips;
+    }
+
+    @Setup(Level.Invocation)
+    public void emptyTable() throws IOException, SQLException {
+        TripsDdl.reCreateTripsTable();
     }
 }

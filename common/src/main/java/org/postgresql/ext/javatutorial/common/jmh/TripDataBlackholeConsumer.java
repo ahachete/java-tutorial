@@ -18,38 +18,32 @@
  *
  */
 
-package org.postgresql.ext.javatutorial.exercises.block1._04;
+
+package org.postgresql.ext.javatutorial.common.jmh;
 
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.postgresql.ext.javatutorial.common.jmh.InsertsState;
-import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
+import org.openjdk.jmh.infra.Blackhole;
 
-import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class Copy {
-    @State(Scope.Benchmark)
-    public static class BatchInsertState {
-        @Param({"3", "10", "100"})
-        public int batchSize;
+public class TripDataBlackholeConsumer {
+    public static void consumeStationData(ResultSet resultSet, Blackhole blackhole, int startColumn) throws SQLException {
+        blackhole.consume(resultSet.getInt(startColumn));
+        blackhole.consume(resultSet.getString(startColumn + 1));
+        blackhole.consume(resultSet.getDouble(startColumn + 2));
+        blackhole.consume(resultSet.getDouble(startColumn + 3));
     }
 
-    @Benchmark
-    public void batchedInserts(InsertsState state, BatchInsertState batchState) throws IOException, SQLException {
-        SqlUtil.connection(c -> {
-            /**
-             * TODO:
-             *
-             * Get a CopyManager from the connection.
-             * Use copyIn(...) to copy data into PostgreSQL, from state variable.
-             * Avoid materializing into a String or other intermediary format the whole dataset. To do so,
-             * batch every batchState trips into a copyIn() call.
-             */
-        });
+    public static void consumeTripData(ResultSet resultSet, Blackhole blackhole) throws SQLException {
+        blackhole.consume(resultSet.getTimestamp(1));
+        blackhole.consume(resultSet.getTimestamp(2));
+        consumeStationData(resultSet, blackhole, 3);
+        consumeStationData(resultSet, blackhole, 7);
+        blackhole.consume(resultSet.getInt(11));
+        blackhole.consume(resultSet.getString(12));
+        blackhole.consume(resultSet.getShort(13));
+        blackhole.consume(resultSet.getShort(14));
     }
 }
