@@ -22,9 +22,12 @@
 package org.postgresql.ext.javatutorial.solutions.block1._01;
 
 
-import org.openjdk.jmh.annotations.*;
-import org.postgresql.ext.javatutorial.common.data.BikeStation;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
 import org.postgresql.ext.javatutorial.common.data.BikeTrip;
+import org.postgresql.ext.javatutorial.common.data.Data2Csv;
 import org.postgresql.ext.javatutorial.common.jmh.TripsBenchmarkState;
 import org.postgresql.ext.javatutorial.common.sql.SqlUtil;
 
@@ -34,38 +37,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class StatementInserts {
-    private static void bikeStationCsv(Stream.Builder<String> values, BikeStation station) {
-        values
-                .add(station.getId() + "")
-                .add(station.getName())
-                .add(station.getLatitude() + "")
-                .add(station.getLongitude() + "");
-    }
-
-    private static String bikeTripCsv(BikeTrip trip) {
-        Stream.Builder<String> values = Stream.<String>builder()
-                .add(trip.getStartDateString())
-                .add(trip.getEndDateString());
-
-        bikeStationCsv(values, trip.getStartStation());
-        bikeStationCsv(values, trip.getEndStation());
-
-        values
-                .add(trip.getBikeId() + "")
-                .add(trip.getUserType())
-                .add(trip.getBirthYear().orElse(null) + "")
-                .add(trip.getGender() + "");
-
-        return values.build()
-                .map(s -> ("null".equals(s)) ? s : "'" + s + "'")
-                .collect(Collectors.joining(","));
-    }
-
     private static void executeStatements(Connection connection, Stream<String> statements) {
         statements.forEach(i -> {
             try {
@@ -86,7 +61,7 @@ public class StatementInserts {
                         state.getBikeTrips().stream().map(t ->
                                 new StringBuilder()
                                         .append("INSERT INTO trips VALUES (")
-                                        .append(bikeTripCsv(t))
+                                        .append(Data2Csv.bikeTripQuotedCsv(t))
                                         .append(")")
                                         .toString()
                                 )
@@ -102,7 +77,7 @@ public class StatementInserts {
             StringBuilder sb = new StringBuilder()
                     .append("INSERT INTO trips VALUES ");
             for (int i = 0; i < batchSize; i++) {
-                sb.append("(").append(bikeTripCsv(iterator.next())).append(")");
+                sb.append("(").append(Data2Csv.bikeTripQuotedCsv(iterator.next())).append(")");
                 if(iterator.hasNext() && i < batchSize - 1) {
                     sb.append(",");
                 } else {

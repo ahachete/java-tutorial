@@ -1,0 +1,15 @@
+
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._01.StatementInserts.statementInserts						4704.26 ± 733.85
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._01.StatementInserts.statementMultiInserts	multiInsertBatchSize=3		1617.91 ± 219.19
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._01.StatementInserts.statementMultiInserts	multiInsertBatchSize=10		646.52 ± 300.58
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._01.StatementInserts.statementMultiInserts	multiInsertBatchSize=100	167.16 ± 149.75
+
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._02.PreparedInserts.preparedInserts						4364.47 ± 545.06
+
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._03.BatchedInserts.batchedInserts		batchSize=3			1224.37 ± 241.91
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._03.BatchedInserts.batchedInserts		batchSize=10			488.26 ± 288.87
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._03.BatchedInserts.batchedInserts		batchSize=100			131.40 ± 128.75
+
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._04.Copy.batchedInserts			batchSize=3			1661.60 ± 319.08
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._04.Copy.batchedInserts			batchSize=10			563.46 ± 75.43
+Avg(ms):	org.postgresql.ext.javatutorial.solutions.block1._04.Copy.batchedInserts			batchSize=100			107.87 ± 101.53
