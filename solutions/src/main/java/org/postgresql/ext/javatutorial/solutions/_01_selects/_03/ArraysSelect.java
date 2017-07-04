@@ -47,10 +47,14 @@ public class ArraysSelect {
         SqlUtil.connection(c -> {
             ResultSet resultSet = c.prepareStatement(SELECT_ARRAYS_QUERY).executeQuery();
             if(resultSet.next()) {
-                blackhole.consume((Integer[]) resultSet.getArray(1).getArray());
-                blackhole.consume((Double[]) resultSet.getArray(2).getArray());
-                blackhole.consume((String[]) resultSet.getArray(3).getArray());
-                blackhole.consume((String[]) resultSet.getArray(4).getArray());
+                Integer[] bikeIds = (Integer[]) resultSet.getArray(1).getArray();
+                blackhole.consume(bikeIds);
+                Double[] durations = (Double[]) resultSet.getArray(2).getArray();
+                blackhole.consume(durations);
+                String[] startNames = (String[]) resultSet.getArray(3).getArray();
+                blackhole.consume(startNames);
+                String[] endNames = (String[]) resultSet.getArray(4).getArray();
+                blackhole.consume(endNames);
             }
         });
     }
